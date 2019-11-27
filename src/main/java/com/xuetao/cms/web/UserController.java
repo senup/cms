@@ -19,24 +19,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/users")
-    public Map list(@RequestParam(value = "start", defaultValue = "0") int start,
+    public Result list(@RequestParam(value = "start", defaultValue = "0") int start,
                     @RequestParam(value = "size", defaultValue = "20") int size) throws Exception {
-        start = start<0?0:start;
-        Page page = userService.list(start, size);
-        Map<Object, Object> map = new HashMap<>();
-        map.put("code",0);
-        map.put("msg","");
-        map.put("count",20);
-        map.put("data",page.getContent());
-//        Result result = new Result(0, "", page.getSize(), page.getContent());
-        return map;
+        start = start<1?1:start;
+        Page page = userService.list(start-1, size);
+        Result result = new Result(0, "", (int) page.getTotalElements(), page.getContent());
+        return result;
 
     }
-    @GetMapping("/user")
-    public Result listAll(){
-        List<User> list = userService.list();
-        Result result = new Result(0, "", 0, list);
-        return result;
-    }
+
 
 }

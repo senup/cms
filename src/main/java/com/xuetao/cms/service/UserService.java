@@ -23,11 +23,7 @@ public class UserService {
         return pageFromJPA;
     }
 
-    public List<User> list(){
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        List<User> all = userDAO.findAll(sort);
-        return all;
-    }
+
 
 
 }
